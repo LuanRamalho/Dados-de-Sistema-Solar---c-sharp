@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "6f0efbc8",
+    "Nome": "Merc\u00FArio",
+    "Rotacao": "1407",
+    "Translacao": "88",
+    "Diametro": "4879",
+    "Temperatura": "167",
+    "Distancia": "57.9",
+    "Imagem": "https://img.odcdn.com.br/wp-content/uploads/2023/10/mercurio-planeta.png"
+  },
+  {
+    "Id": "a49c507e",
+    "Nome": "V\u00EAnus",
+    "Rotacao": "5832",
+    "Translacao": "224.7",
+    "Diametro": "12104",
+    "Temperatura": "464",
+    "Distancia": "108.2",
+    "Imagem": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2024/04/Venus.jpg?w=1200&h=900&crop=1"
+  },
+  {
+    "Id": "e1403b13",
+    "Nome": "Terra",
+    "Rotacao": "24",
+    "Translacao": "365.2",
+    "Diametro": "12742",
+    "Temperatura": "15",
+    "Distancia": "149.6",
+    "Imagem": "https://static.todamateria.com.br/upload/pl/an/planetaterra-cke.jpg"
+  },
+  {
+    "Id": "27095c6b",
+    "Nome": "Marte",
+    "Rotacao": "24.6",
+    "Translacao": "687",
+    "Diametro": "6779",
+    "Temperatura": "-65",
+    "Distancia": "227.9",
+    "Imagem": "https://static.todamateria.com.br/upload/ma/rt/marte-0.jpg"
+  },
+  {
+    "Id": "d37b633b",
+    "Nome": "J\u00FApiter",
+    "Rotacao": "9.9",
+    "Translacao": "4333",
+    "Diametro": "139822",
+    "Temperatura": "-110",
+    "Distancia": "778.6",
+    "Imagem": "https://images.educamaisbrasil.com.br/content/banco_de_imagens/guia-de-estudo/D/planeta-jupiter.jpg"
+  },
+  {
+    "Id": "7e3f9c85",
+    "Nome": "Saturno",
+    "Rotacao": "10.7",
+    "Translacao": "10759",
+    "Diametro": "116460",
+    "Temperatura": "-140",
+    "Distancia": "1433",
+    "Imagem": "https://static.todamateria.com.br/upload/pl/an/planeta-saturno-og.jpg?class=ogImageWide"
+  },
+  {
+    "Id": "e0bce0d5",
+    "Nome": "Urano",
+    "Rotacao": "17.2",
+    "Translacao": "30687",
+    "Diametro": "50724",
+    "Temperatura": "-195",
+    "Distancia": "2872",
+    "Imagem": "https://s2.static.brasilescola.uol.com.br/be/2021/04/planeta-urano.jpg"
+  },
+  {
+    "Id": "f3be06c7",
+    "Nome": "Netuno",
+    "Rotacao": "16.1",
+    "Translacao": "60190",
+    "Diametro": "49244",
+    "Temperatura": "-201",
+    "Distancia": "4495",
+    "Imagem": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2024/02/vista-de-netuno.jpg?w=1200&h=1200&crop=1"
+  }
+]

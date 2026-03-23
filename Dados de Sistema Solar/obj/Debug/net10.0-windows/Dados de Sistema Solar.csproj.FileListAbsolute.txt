@@ -1,0 +1,14 @@
+E:\Meus Documentos\Programas Desenvolvidos\C# - Prgramas Desenvolvidos\Dados de Sistema Solar\bin\Debug\net10.0-windows\Dados de Sistema Solar.exe
+E:\Meus Documentos\Programas Desenvolvidos\C# - Prgramas Desenvolvidos\Dados de Sistema Solar\bin\Debug\net10.0-windows\Dados de Sistema Solar.deps.json
+E:\Meus Documentos\Programas Desenvolvidos\C# - Prgramas Desenvolvidos\Dados de Sistema Solar\bin\Debug\net10.0-windows\Dados de Sistema Solar.runtimeconfig.json
+E:\Meus Documentos\Programas Desenvolvidos\C# - Prgramas Desenvolvidos\Dados de Sistema Solar\bin\Debug\net10.0-windows\Dados de Sistema Solar.dll
+E:\Meus Documentos\Programas Desenvolvidos\C# - Prgramas Desenvolvidos\Dados de Sistema Solar\bin\Debug\net10.0-windows\Dados de Sistema Solar.pdb
+E:\Meus Documentos\Programas Desenvolvidos\C# - Prgramas Desenvolvidos\Dados de Sistema Solar\obj\Debug\net10.0-windows\Dados de Sistema Solar.GeneratedMSBuildEditorConfig.editorconfig
+E:\Meus Documentos\Programas Desenvolvidos\C# - Prgramas Desenvolvidos\Dados de Sistema Solar\obj\Debug\net10.0-windows\Dados de Sistema Solar.AssemblyInfoInputs.cache
+E:\Meus Documentos\Programas Desenvolvidos\C# - Prgramas Desenvolvidos\Dados de Sistema Solar\obj\Debug\net10.0-windows\Dados de Sistema Solar.AssemblyInfo.cs
+E:\Meus Documentos\Programas Desenvolvidos\C# - Prgramas Desenvolvidos\Dados de Sistema Solar\obj\Debug\net10.0-windows\Dados de Sistema Solar.csproj.CoreCompileInputs.cache
+E:\Meus Documentos\Programas Desenvolvidos\C# - Prgramas Desenvolvidos\Dados de Sistema Solar\obj\Debug\net10.0-windows\Dados de Sistema Solar.dll
+E:\Meus Documentos\Programas Desenvolvidos\C# - Prgramas Desenvolvidos\Dados de Sistema Solar\obj\Debug\net10.0-windows\refint\Dados de Sistema Solar.dll
+E:\Meus Documentos\Programas Desenvolvidos\C# - Prgramas Desenvolvidos\Dados de Sistema Solar\obj\Debug\net10.0-windows\Dados de Sistema Solar.pdb
+E:\Meus Documentos\Programas Desenvolvidos\C# - Prgramas Desenvolvidos\Dados de Sistema Solar\obj\Debug\net10.0-windows\Dados de Sistema Solar.genruntimeconfig.cache
+E:\Meus Documentos\Programas Desenvolvidos\C# - Prgramas Desenvolvidos\Dados de Sistema Solar\obj\Debug\net10.0-windows\ref\Dados de Sistema Solar.dll

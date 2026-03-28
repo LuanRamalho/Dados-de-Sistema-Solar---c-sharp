@@ -2,17 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text.Json;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Linq;
 
 namespace SistemaSolarApp
 {
     public partial class MainForm : Form
     {
         private List<Planeta> planetas;
-        private DataGridView dgvPlanetas;
+        private FlowLayoutPanel pnlCards; 
         private string filePath = "planetas.json";
 
         public MainForm()
@@ -23,96 +23,133 @@ namespace SistemaSolarApp
 
         private void ConfigurarInterface()
         {
-            // Configurações da Janela
-            this.Text = "Explorador do Sistema Solar";
-            this.Size = new Size(1000, 600);
-            this.BackColor = Color.FromArgb(15, 15, 35); // Azul espacial profundo
+            // Configurações da Janela Principal
+            this.Text = "Explorador do Sistema Solar - Modo Galeria";
+            this.Size = new Size(1100, 750);
+            this.BackColor = Color.FromArgb(10, 10, 25);
             this.StartPosition = FormStartPosition.CenterScreen;
 
-            // Painel de Título
+            // Cabeçalho Estilizado
             Label lblTitulo = new Label
             {
                 Text = "SISTEMA SOLAR",
-                Font = new Font("Segoe UI", 24, FontStyle.Bold),
+                Font = new Font("Segoe UI", 28, FontStyle.Bold),
                 ForeColor = Color.Gold,
                 Dock = DockStyle.Top,
-                Height = 60,
+                Height = 90,
                 TextAlign = ContentAlignment.MiddleCenter
             };
 
-            // Configuração do DataGridView
-            dgvPlanetas = new DataGridView
-            {
-                Dock = DockStyle.Top,
-                Height = 350,
-                BackgroundColor = Color.FromArgb(25, 25, 50),
-                ForeColor = Color.White,
-                BorderStyle = BorderStyle.None,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
-                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
-                AllowUserToAddRows = false,
-                RowHeadersVisible = false,
-                ReadOnly = true
-            };
-
-            dgvPlanetas.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(40, 40, 80);
-            dgvPlanetas.ColumnHeadersDefaultCellStyle.ForeColor = Color.Yellow;
-            dgvPlanetas.EnableHeadersVisualStyles = false;
-            dgvPlanetas.DefaultCellStyle.BackColor = Color.FromArgb(30, 30, 60);
-
-            // Adicionando Colunas
-            dgvPlanetas.Columns.Add("Nome", "Nome");
-            dgvPlanetas.Columns.Add("Rotacao", "Rotação (h)");
-            dgvPlanetas.Columns.Add("Translacao", "Translação (d)");
-            dgvPlanetas.Columns.Add("Diametro", "Diâmetro (km)");
-            dgvPlanetas.Columns.Add("Temp", "Temp (°C)");
-            dgvPlanetas.Columns.Add("Distancia", "Dist. Sol (M km)");
-            
-            // Coluna de Link clicável
-            DataGridViewLinkColumn linkCol = new DataGridViewLinkColumn
-            {
-                Name = "Imagem",
-                HeaderText = "Link da Imagem",
-                DataPropertyName = "Imagem",
-                LinkColor = Color.Cyan,
-                ActiveLinkColor = Color.White
-            };
-            dgvPlanetas.Columns.Add(linkCol);
-            dgvPlanetas.CellContentClick += DgvPlanetas_CellContentClick;
-
-            // Painel de Botões
-            FlowLayoutPanel panelBotoes = new FlowLayoutPanel
+            // Container Principal dos Cards (Equivalente a um Flex Container)
+            pnlCards = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.LeftToRight,
-                Padding = new Padding(20),
+                AutoScroll = true,
+                Padding = new Padding(25),
                 BackColor = Color.Transparent
             };
 
-            panelBotoes.Controls.Add(CriarBotao("Cadastrar", Color.ForestGreen, (s, e) => CadastrarPlaneta()));
-            panelBotoes.Controls.Add(CriarBotao("Excluir", Color.Crimson, (s, e) => DeletarPlaneta()));
-            panelBotoes.Controls.Add(CriarBotao("Sair", Color.Gray, (s, e) => Application.Exit()));
+            // Barra de Ações Inferior
+            FlowLayoutPanel panelAcoes = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Bottom,
+                Height = 85,
+                FlowDirection = FlowDirection.LeftToRight,
+                Padding = new Padding(25, 18, 0, 0),
+                BackColor = Color.FromArgb(15, 15, 35)
+            };
 
-            this.Controls.Add(panelBotoes);
-            this.Controls.Add(dgvPlanetas);
+            panelAcoes.Controls.Add(CriarBotao("Cadastrar Novo", Color.ForestGreen, (s, e) => CadastrarPlaneta()));
+            panelAcoes.Controls.Add(CriarBotao("Sair", Color.FromArgb(60, 60, 60), (s, e) => Application.Exit()));
+
+            // Adicionando controles ao Form
+            this.Controls.Add(pnlCards);
+            this.Controls.Add(panelAcoes);
             this.Controls.Add(lblTitulo);
         }
 
-        private Button CriarBotao(string texto, Color cor, EventHandler evento)
+        private void AtualizarCards()
         {
-            Button btn = new Button
+            // Limpa o container antes de renderizar (Similar ao innerHTML = "" no JS)
+            pnlCards.Controls.Clear();
+            
+            foreach (var p in planetas)
             {
-                Text = texto,
-                BackColor = cor,
-                ForeColor = Color.White,
-                Size = new Size(120, 45),
+                pnlCards.Controls.Add(CriarCardPlaneta(p));
+            }
+        }
+
+        private Panel CriarCardPlaneta(Planeta p)
+        {
+            // Container do Card
+            Panel card = new Panel
+            {
+                Size = new Size(250, 340),
+                BackColor = Color.FromArgb(35, 35, 70),
+                Margin = new Padding(15)
+            };
+
+            // Badge/Nome do Planeta
+            Label lblNome = new Label
+            {
+                Text = p.Nome.ToUpper(),
+                Font = new Font("Segoe UI", 15, FontStyle.Bold),
+                ForeColor = Color.DeepSkyBlue,
+                Dock = DockStyle.Top,
+                Height = 50,
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+
+            // Corpo de Texto (Dados Técnicos)
+            Label lblDados = new Label
+            {
+                Text = $"✨ Rotação: {p.Rotacao}h\n\n" +
+                       $"🚀 Translação: {p.Translacao}d\n\n" +
+                       $"📏 Diâmetro: {p.Diametro}km\n\n" +
+                       $"🌡️ Temp: {p.Temperatura}°C\n\n" +
+                       $"☀️ Dist. Sol: {p.Distancia}M km",
+                Font = new Font("Segoe UI Semibold", 10),
+                ForeColor = Color.WhiteSmoke,
+                Location = new Point(20, 65),
+                Size = new Size(210, 180)
+            };
+
+            // Botão de Link (Simulando uma Anchor Tag)
+            Button btnLink = new Button
+            {
+                Text = "🔗 Abrir Imagem",
+                Size = new Size(210, 40),
+                Location = new Point(20, 260),
                 FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                ForeColor = Color.Gold,
                 Cursor = Cursors.Hand
             };
-            btn.FlatAppearance.BorderSize = 0;
-            btn.Click += evento;
-            return btn;
+            btnLink.FlatAppearance.BorderColor = Color.Gold;
+            btnLink.Click += (s, e) => AbrirLink(p.Imagem);
+
+            // Botão de Deletar (Floating no canto superior direito)
+            Button btnDelete = new Button
+            {
+                Text = "✕",
+                Size = new Size(30, 30),
+                Location = new Point(215, 5),
+                FlatStyle = FlatStyle.Flat,
+                ForeColor = Color.FromArgb(255, 80, 80),
+                Font = new Font("Arial", 10, FontStyle.Bold)
+            };
+            btnDelete.FlatAppearance.BorderSize = 0;
+            btnDelete.Click += (s, e) => {
+                planetas.Remove(p);
+                SalvarDados();
+                AtualizarCards();
+            };
+
+            card.Controls.Add(btnDelete);
+            card.Controls.Add(btnLink);
+            card.Controls.Add(lblDados);
+            card.Controls.Add(lblNome);
+
+            return card;
         }
 
         private void CarregarDados()
@@ -124,7 +161,6 @@ namespace SistemaSolarApp
             }
             else
             {
-                // Dados Fixos dos 8 Planetas
                 planetas = new List<Planeta>
                 {
                     new Planeta { Nome = "Mercúrio", Rotacao = "1407", Translacao = "88", Diametro = "4879", Temperatura = "167", Distancia = "57.9", Imagem = "https://bit.ly/3uN6b8k" },
@@ -138,7 +174,8 @@ namespace SistemaSolarApp
                 };
                 SalvarDados();
             }
-            AtualizarGrid();
+            // Importante: Agora chamamos o renderizador de cards
+            AtualizarCards();
         }
 
         private void SalvarDados()
@@ -147,47 +184,53 @@ namespace SistemaSolarApp
             File.WriteAllText(filePath, json);
         }
 
-        private void AtualizarGrid()
-        {
-            dgvPlanetas.Rows.Clear();
-            foreach (var p in planetas)
-            {
-                dgvPlanetas.Rows.Add(p.Nome, p.Rotacao, p.Translacao, p.Diametro, p.Temperatura, p.Distancia, p.Imagem);
-            }
-        }
-
-        private void DgvPlanetas_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == dgvPlanetas.Columns["Imagem"].Index && e.RowIndex >= 0)
-            {
-                string url = dgvPlanetas.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                try { Process.Start(new ProcessStartInfo(url) { UseShellExecute = true }); }
-                catch { MessageBox.Show("Não foi possível abrir o link."); }
-            }
-        }
-
         private void CadastrarPlaneta()
         {
-            // Para simplificar, vamos simular uma entrada rápida. 
-            // Em um projeto real, você abriria um novo Form com TextBoxes.
-            string novoNome = Microsoft.VisualBasic.Interaction.InputBox("Nome do Planeta:", "Novo Cadastro");
-            if (!string.IsNullOrEmpty(novoNome))
+            string novoNome = Microsoft.VisualBasic.Interaction.InputBox("Digite o nome do planeta:", "Novo Registro");
+            if (!string.IsNullOrWhiteSpace(novoNome))
             {
-                planetas.Add(new Planeta { Nome = novoNome, Rotacao = "0", Translacao = "0", Diametro = "0", Temperatura = "0", Distancia = "0", Imagem = "http://" });
+                planetas.Add(new Planeta { 
+                    Nome = novoNome, 
+                    Rotacao = "0", 
+                    Translacao = "0", 
+                    Diametro = "0", 
+                    Temperatura = "0", 
+                    Distancia = "0", 
+                    Imagem = "https://google.com" 
+                });
                 SalvarDados();
-                AtualizarGrid();
+                AtualizarCards();
             }
         }
 
-        private void DeletarPlaneta()
+        private void AbrirLink(string url)
         {
-            if (dgvPlanetas.SelectedRows.Count > 0)
+            try
             {
-                string nome = dgvPlanetas.SelectedRows[0].Cells[0].Value.ToString();
-                planetas.RemoveAll(p => p.Nome == nome);
-                SalvarDados();
-                AtualizarGrid();
+                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
             }
+            catch
+            {
+                MessageBox.Show("Não foi possível abrir o link da imagem.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private Button CriarBotao(string texto, Color cor, EventHandler evento)
+        {
+            Button btn = new Button
+            {
+                Text = texto,
+                BackColor = cor,
+                ForeColor = Color.White,
+                Size = new Size(150, 48),
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                Cursor = Cursors.Hand,
+                Margin = new Padding(0, 0, 15, 0)
+            };
+            btn.FlatAppearance.BorderSize = 0;
+            btn.Click += evento;
+            return btn;
         }
     }
 }
